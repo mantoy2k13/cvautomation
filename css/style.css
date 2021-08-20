@@ -1,0 +1,308 @@
+  
+.bg-blue{
+    background-color: #000a25;
+}
+.form-input{
+    padding:5px 5px
+}
+*{
+    font-family: 'Montserrat', sans-serif;
+    
+}
+
+h1,h2,h3,h4,h5,h6{margin: 0;}
+.name-container{text-transform: uppercase;}
+.rd-logo-container, .name-container > .n-inner{width: fit-content;}
+body{
+    width: 980px;
+    background: white;
+    display: block;
+    margin: auto;
+font-family: 'Montserrat', sans-serif;
+    
+}
+.body{
+    width: 100%;
+    background: white;
+    display: block;
+    margin: auto;
+font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+}
+.bg-black{
+    background-color:#212529 ;
+    padding:10px;
+    color:#fff;
+}
+div#wrapper{
+    display: block;
+    width:100%;
+}
+.name-container{
+    background: #000A25;
+    color: white;
+    padding: 2em 7em 2em 5em;
+    text-align: right;
+}
+.name-container > .n-inner{
+    text-align: center;
+    margin: 0 0 0 auto;
+    z-index: 999999;
+    width:80%;
+}
+.name-container h2 {
+    font-weight: 400;
+    font-size: 30px;
+}
+.name-container h1 {
+    font-size: 40px;
+}
+.rd-logo-container{
+    position: relative;
+    top: -6em;
+    left: 3em;
+}
+.rd-logo-container > img{
+    position: absolute;
+    height: 11em;
+    width: 11em;
+}
+.details-container{
+    display: grid;
+    grid-template-columns: 18em auto;
+    margin-top: 20px;
+}
+.sidebar-container{
+    background: #000A25;
+    color: white;
+    padding: 5em 1.5em 2em;
+    max-height: 100%;
+}​
+
+.sidebar-container p {
+    line-height: 20px;
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.objective-container p {
+    line-height: 20px;
+    margin-top: 0;
+    font-size: 14px;
+}
+.sidebar-child .s-items, ul.exp-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+.sidebar-child .s-title {
+    text-transform: uppercase;
+}
+.sidebar-child .s-title {
+    font-size: 19px;
+}
+.sidebar-child .s-items {
+    font-size: 13px;
+}
+
+.experiences-container{
+    margin-top: 4em;
+}
+.experiences-container .exp-title {
+    text-transform: uppercase;
+    padding: 8px 20px;
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    border-radius: 0px 100em 100em 0px;
+    background: #000A25;
+    letter-spacing: 2px;
+    display: block;
+    width: 24em;
+    height: fit-content;
+}
+.experiences-container .exp-title:before {
+    content: " ";
+    position: absolute;
+    height: 50px;
+    width: 28em;
+    background: #1F64FC;
+    margin-left: -20px;
+    margin-top: -20px;
+    border-radius: 0px 100em 100em 0px;
+    z-index: -1;
+}
+.exp-item:first-of-type {
+    margin-top: 10px;
+}
+
+p.fontbold:first-of-type {
+    font-weight: 600;
+}
+.exp-item ul{
+    padding-left: 0;
+}
+
+
+.exp-item p {
+    
+    font-size: 16px;
+}
+.exp-item {
+    margin-bottom: 10px;
+}
+article > .exp-item{
+    margin-left: 20px;
+    max-width: 35em;
+}
+.work_experience {
+    padding: 20px 20px 20px 0;
+}
+.work-exp .exp-item p:first-child{
+    text-transform: uppercase;
+    margin-top: 40px;
+}
+.work-exp article{
+    padding-top: 0px;
+}
+
+div#educational_att {
+    padding: 20px;
+}
+div#personal-freelance {
+    padding: 20px;
+}
+
+div#seminarstraining {
+    padding: 20px;
+}
+
+div#certification {
+    padding: 20px;
+}
+li.fontbold {
+    list-style: none;
+}
+
+
+/* Right Container */
+
+/* Jan Hinkle Sacris CSS */
+/* index.php */
+/* Container */
+h1{
+    font-size: 75px !important;
+    font-weight: 700 !important;
+}
+h1.header-text {
+    font-size: 40px !important;
+    padding-top: 0px !important;
+
+}
+/* Left Container */
+
+
+/* submit.php */
+/* Right Container */
+.row.mt-4 {
+    margin-top: 0px !important;
+}
+.form-group input{
+    margin:15px 0;
+}
+.work-exp{
+    min-height: 125px !important;
+}
+.row.mt-2.p-2 {
+    margin-left: 0em;
+}
+
+.row1{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.btn{
+    margin-top: 1em;
+    padding-top: 10px;
+    padding-bottom: 50px;
+    margin: auto !important;
+    display: block;
+    width: 100%;
+    text-align: center !important;
+}
+#btn.btn a{
+    margin-right: 10px;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #000A25;
+    border-radius: 25px;
+    color: #000A25 !important;
+    font-weight: 900;
+    background-color: #ffffff00;
+}
+#btn.btn a:hover{
+    margin-right: 10px;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #000A25;
+    border-radius: 25px;
+    color: #ffffff !important;
+    font-weight: 900;
+    background-color: #000A25;
+}
+
+/* Left Container */
+
+
+/* Right Container */
+.exp-child.work_experience .exp-item:last-child {
+    margin-top: 30px;
+}
+.exp-child.educational_att .exp-item .fontbold,
+.exp-child.work_experience .exp-item .fontbold,
+.exp-child.personal-freelance .exp-item .fontbold,
+.exp-child.seminarstraining .exp-item .fontbold,
+.exp-child.certification .exp-item .fontbold{
+    line-height: 6px;
+}
+ul li.fontbold {
+    line-height: 20px !important;
+}
+article{
+    padding: 0.5em 0;
+}
+
+.s-items.ach-items li{
+    margin-bottom: 20px;
+}
+
+.exp-child.work_experience .exp-item p:nth-child(1) {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.exp-child.work_experience .exp-item p:not(:nth-child(1)) {
+    font-size: 18px !important;
+    font-weight: 500;
+}
+
+.exp-child.work_experience .exp-item ul li {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+li.fontbold.decorated {
+    margin-left: 10px;
+}
+
+li.fontbold.decorated:before {
+    content: "- ";
+    position: absolute;
+    margin-left: -10px;
+}
+
+.row.mt-4 h1, .text-center.pt-4 {
+    font-size: 25px!important;
+}
+/* Jan Hinkle Sacris CSS End */
