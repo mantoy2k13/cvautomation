@@ -133,22 +133,52 @@
                 '".$json_cert_yr."'
             )";
 
-            $sql_update = "";
-
+            
 
             if($id){
-                echo 'Update';
+                $sql_update = "
+            UPDATE
+                 `cvautomation`
+            SET 
+                `name`='".$name."',
+                `position`='".$position."',
+                `applicant-information`='".$applicant_info."',
+                `skills`='".$field_skills."',
+                `achievements`='".$achievements."',
+                `awards`='".$awards."',
+                `portfolio`='".$portfolio."',
+                `education`='".$json_edu_course."',
+                `name_of_school`='".$json_edu_sch_name."',
+                `year_gradute`='".$json_edu_yr_grad."',
+                `duration_of_work`='".$json_work_exp_start_date."',
+                `company_name`='".$json_work_exp_comp_name."',
+                `company_position`='".$json_work_exp_comp_position."',
+                `duties_responsibilites`='".$json_work_exp_duties_res."',
+                `projects`='".$json_work_exp_projects."',
+                `personpan_project_name`='".$json_per_proj_name."',
+                `personal_project_year`='".$json_per_proj_year."',
+                `seminar_name`='".$json_seminar_name."',
+                `seminar_year`='".$json_seminar_yr."',
+                `certification_name`='".$json_cert_name."',
+                `certification_year`='".$json_cert_yr."'
+             WHERE 
+                id='".$id."'
+            ";
+
+                if ($conn->query($sql_update) === TRUE) {
+                    echo "Record updated successfully";
+                } else {
+                    echo "Error updating record: " . $conn->error;
+                }
             }
             else{
-                echo 'New record ';
-                // if ($conn->query($sql_insert) === TRUE) {
-                //     echo "New record created successfully";
-                //   } else {
-                //     echo "Error: " . $sql_insert . "<br>" . $conn->error;
-                //   }
+                if ($conn->query($sql_insert) === TRUE) {
+                    echo "New record created successfully";
+                  } else {
+                    echo "Error: " . $sql_insert . "<br>" . $conn->error;
+                  }
             }
-            
-              
+  
             $conn->close();
       ?>
         
