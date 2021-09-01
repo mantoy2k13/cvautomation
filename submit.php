@@ -53,13 +53,16 @@
         $work_exp_comp_name = $_POST['work_experience']['company_name'];
         $work_exp_comp_position = $_POST['work_experience']['company_position'];
         $work_exp_duties_res = $_POST['work_experience']['duties_res'];
+        $work_exp_duties_res_str_rplce = str_replace('&quot;', '"', $work_exp_duties_res);
         $work_exp_projects = $_POST['work_experience']['projects'];
-        
+        $work_exp_project_str_rplce = str_replace('&quot;', '"', $work_exp_projects);
+
+
         $json_work_exp_start_date = json_encode($work_exp_start_date);
         $json_work_exp_comp_name = json_encode($work_exp_comp_name);
         $json_work_exp_comp_position = json_encode($work_exp_comp_position);
-        $json_work_exp_duties_res = json_encode($work_exp_duties_res);
-        $json_work_exp_projects = json_encode($work_exp_projects);
+        $json_work_exp_duties_res = json_encode($work_exp_duties_res_str_rplce);
+        $json_work_exp_projects = json_encode($work_exp_project_str_rplce);
         /*end of json encode work experience attainment*/
         
         /*return to json encode personal project array*/

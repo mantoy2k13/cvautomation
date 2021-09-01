@@ -8,14 +8,7 @@
  $current_date = date("Y-m-d h:i:sa", $today);
  
     $id = (isset($_GET['id'])) ? $_GET['id'] : 0 ;
-    if($id){
-      
-      echo $id . ' Update';
-    }
-    else{
-      echo $id . ' False';
-    }
-    die();
+    
     $servername  = 'localhost';
     $username    = 'root';
     $password    =  '';
@@ -30,9 +23,9 @@
     $sql_fetch = "SELECT * FROM cvautomation WHERE id = '".$id."' ";
     $result = mysqli_query($conn, $sql_fetch);
     $row = $result->fetch_assoc();
-    echo '<pre>';
-      // print_r($row);
-    echo '</pre>';
+    
+    
+    // die();
   ?>
 <!DOCTYPE html>
 <html>
@@ -152,36 +145,93 @@
                     <div class="work_experience">
                 <h1>Work Experience </h1>
                 <?php 
-                  $dura_work = json_decode($row['duration_of_work']);
-                  $comp_name = json_decode($row['company_name']);
-                  $comp_pos  = json_decode($row['company_position']);
-                  
-                ?>
-                  <div class="row row1">
-                      <div class="col-sm">
-                          <input type="text" name="work_experience[start_date][]" class="form-input form-control" value="<?php echo (!empty($dura_work[0])) ? $dura_work[0] : ''; ?>" placeholder="Duration of work"/>
-                        </div>
-                    <!-- end of duration columns-->
-                      <div class="col-sm">
-                          <input type="text" name="work_experience[company_name][]" class="form-input form-control" value="<?php echo (!empty($comp_name[0])) ? $comp_name[0] : '';?>" placeholder="Company Name"/>
-                        </div>   
-                    <!-- end of company name-->
-
-                    <!-- end of company position-->
+                  if($id){
+                    $dura_work = json_decode($row['duration_of_work'], true);
+                    $comp_name = json_decode($row['company_name'], true);
+                    $comp_pos  = json_decode($row['company_position'], true);            
+                    $duties_res = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $row['duties_responsibilites']), true);
+                    $projects = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $row['projects']), true);
                     
-                    <div class="col-sm">
-                      <input type="text" name="work_experience[company_position][]" class="form-input form-control" value="<?php echo (!empty($comp_pos[0])) ? $comp_pos[0] : '';?>" placeholder="Company Position"/>
+                  }
+                ?>
+                  <?php if($id):?>  
+                    <div class="row row1">
+                      <?php for($i = 0; $i<count($dura_work); $i++):?>
+                          <div class="col-sm col-lg-4">
+                              <input type="text" name="work_experience[start_date][]" class="form-input form-control" value="<?=$dura_work[$i];?>" placeholder="Duration of work"/>
+                          </div>
+                      <?php endfor;?>
+                        <!-- end for loop duration of work-->
+                        <?php for($i = 0; $i<count($comp_name); $i++):?>
+                          <div class="col-sm col-lg-4">
+                              <input type="text" name="work_experience[company_name][]" class="form-input form-control" value="<?=$comp_name[$i];?>" placeholder="Company Name"/>
+                          </div>
+                      <?php endfor;?>
+
+                      <!-- end for loop company name-->
+                      <?php for($i = 0; $i<count($comp_pos); $i++):?>
+                          <div class="col-sm col-lg-4">
+                              <input type="text" name="work_experience[company_position][]" class="form-input form-control" value="<?=$comp_pos[$i];?>" placeholder="Company Position"/>
+                          </div>
+                      <?php endfor;?>
+                      <!-- end for loop company position-->
                     </div>
-                  </div>
-                  <div class="row row2">
+                      <!-- end row1 -->
+                    
+                    <div class="row row2">
+                    <?php for($i = 0; $i<count($duties_res); $i++):?>
+                          <div class="col-sm col-lg-6">
+                          <textarea name="work_experience[duties_res][]" id="" class="form-control work-exp" cols="3" rows="1" placeholder="Duties Responsibilites"><?=$duties_res[$i];?></textarea>
+                          </div>
+                    <?php endfor;?>
+                    
+                    <?php for($i = 0; $i<count($projects); $i++):?>
+                        <div class="col-sm col-lg-6">
+                        <textarea name="work_experience[projects][]" id="" class="form-control work-exp" cols="3" rows="1" placeholder="projects"><?=$projects[$i];?></textarea>
+                        </div>
+                    <?php endfor;?>
+                    <a href="javascript:;" class="add_exp" title="Add field"><i class="fas fa-plus"></i></a>
+                    </div>
+                    <?php else:?>
+                      <div class="row row1">
+                          <div class="col-sm">
+                                <input type="text" name="work_experience[start_date][]" class="form-input form-control" value="<?php  ?>" placeholder="Duration of work"/>
+                            </div>
+                          <!-- end of duration columns-->
+                            <div class="col-sm">
+                                <input type="text" name="work_experience[company_name][]" class="form-input form-control" value="<?php echo (!empty($comp_name[0])) ? $comp_name[0] : '';?>" placeholder="Company Name"/>
+                              </div>   
+                          <!-- end of company name-->
+
+                          <!-- end of company position-->
+                          
+                          <div class="col-sm">
+                            <input type="text" name="work_experience[company_position][]" class="form-input form-control" value="<?php echo (!empty($comp_pos[0])) ? $comp_pos[0] : '';?>" placeholder="Company Position"/>
+                          </div>
+                          
+                      </div>
+                      <div class="row row2">
                     <div class="col-sm">
-                      <textarea name="work_experience[duties_res][]" id="" class="form-control work-exp" cols="3" rows="1" placeholder="Duties Responsibilites"><?=isset($row['duties_responsibilites']) ? $row['duties_responsibilites'] : '' ;?></textarea>
+                      <textarea name="work_experience[duties_res][]" id="" class="form-control work-exp" cols="3" rows="1" placeholder="Duties Responsibilites"><?=empty($duties_res[0]) ? '' : $duties_res[0] ;?></textarea>
                     </div>
                     <div class="col-sm">
-                      <textarea name="work_experience[projects][]" id="" class="form-control work-exp" cols="3" rows="1" placeholder="Projects"><?=isset($row['projects']) ? $row['projects'] : '' ;?></textarea>
+                      <textarea name="work_experience[projects][]" id="" class="form-control work-exp" cols="3" rows="1" placeholder="Projects"><?=empty($projects[0]) ? '' : $row['projects'] ;?></textarea>
                     </div>
                     <a href="javascript:;" class="add_exp" title="Add field"><i class="fas fa-plus"></i></a>
                   </div>
+                  <?php endif;?>
+                <!--
+                  <div class="row row2">
+                    <div class="col-sm">
+                      <textarea name="work_experience[duties_res][]" id="" class="form-control work-exp" cols="3" rows="1" placeholder="Duties Responsibilites"><?=empty($duties_res[0]) ? '' : $duties_res[0] ;?></textarea>
+                    </div>
+                    <div class="col-sm">
+                      <textarea name="work_experience[projects][]" id="" class="form-control work-exp" cols="3" rows="1" placeholder="Projects"><?=empty($projects[0]) ? '' : $row['projects'] ;?></textarea>
+                    </div>
+                    <a href="javascript:;" class="add_exp" title="Add field"><i class="fas fa-plus"></i></a>
+                  </div>
+                  --?
+                  <!-- end if row2-->
               </div>
                     <!-- end work experience div -->
                       <div class="personal-freelance" id="personal-freelance">
