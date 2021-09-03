@@ -8,7 +8,7 @@
  $current_date = date("Y-m-d h:i:sa", $today);
  
     $id = (isset($_GET['id'])) ? $_GET['id'] : 0 ;
-    
+    $editedby = (isset($_GET['editby'])) ? $_GET['editby'] : 0;
     $servername  = 'localhost';
     $username    = 'root';
     $password    =  '';
@@ -24,8 +24,6 @@
     $result = mysqli_query($conn, $sql_fetch);
     $row = $result->fetch_assoc();
     
-    
-    // die();
   ?>
 <!DOCTYPE html>
 <html>
@@ -57,7 +55,7 @@
         </div>
     </div>
     
- 
+    
     <form action="submit.php" method="post">
         <div class="p-5">
           <div class="row mt-4">
@@ -261,8 +259,6 @@
                                     <input type="text" name="personal[project_year][]" class="form-input form-control" value="" placeholder="Project Year"/>
                                   </div>
                             <?php endif;?>
-                           
-                            
                             <a href="javascript:;" class="add_person_prj_btn" title="Add Personal Projects"><i class="fas fa-plus"></i></a>
                           </div>
                       </div>
@@ -334,6 +330,7 @@
                       <!-- end certifications div-->
                     <div class="row mt-2 p-2">
                       <input type="hidden" name='id' value="<?=$id;?>">
+                      <input type="hidden" name='editedby' value="<?=$editedby;?>">
                       <input type="submit" name="submit" class="btn btn-primary" value="<?=($id) ? 'Update' : 'Add / Submit';?>">
                     </div>
                     <!-- end work experience -->
@@ -341,9 +338,7 @@
           </div>            
             <!-- end first col -->               
         </div>
-        
         <!-- end whole container-->
-      
     </form>
     
   <script src="js/default.js"> </script>

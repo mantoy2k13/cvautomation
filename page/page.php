@@ -45,7 +45,7 @@ if(mysqli_num_rows($res_data) > 0 ){
 
 
     // echo $row['name'];
-    mysqli_close($conn);
+    
 
 ?>
 <!DOCTYPE html>
@@ -64,11 +64,12 @@ if(mysqli_num_rows($res_data) > 0 ){
 
 </head>
 <body>
-    <?php
-        // echo '<pre>';
-        //     print_r($data);
-        // echo '</pre>';
-    ?>
+<?php 
+session_start();
+
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
+    $editby = ($_SESSION['id']) ? $_SESSION['id'] : 0 ;
+ ?>
     <div class="row bg-blue">
         <div class="col-lg-4">
             <div class="d-flex justify-content-center">
@@ -82,7 +83,8 @@ if(mysqli_num_rows($res_data) > 0 ){
         </div>
         <div class="col-lg-4">
             <div class="d-flex justify-content-center">
-                <p class="text-white">Admin</p>
+            <p style="color:#fff;"> <?php echo $_SESSION['name']; ?>, </p>
+             <p style="color:#fff;"><a  style="color:#fff;" href="logout.php">Logout</a></p>
             </div>
         </div>
     </div>
@@ -104,7 +106,7 @@ if(mysqli_num_rows($res_data) > 0 ){
                     </form>
                 </div>
                 <div class="pl-4 pt-4">
-                    <a href="../index.php?id=0" id="cv-convert" class="" target="_blank">CV Automation</a>
+                    <a href="../index.php?id=0" id="cv-convert" class="" target="_blank"> Add CV Automation</a>
                 </div>
             </div>
         </div>
@@ -124,14 +126,21 @@ if(mysqli_num_rows($res_data) > 0 ){
             </thead>
             <tbody>
               <?php foreach($data as $tble_data):?>
+                <?php 
+                  $edit_id = $tble_data['edited_by'];
+                  $sql_editedby = "SELECT u.id as u_id, u.name FROM `users` u WHERE u.id = '".$edit_id."' ";
+                  $editedby = mysqli_query($conn,$sql_editedby);
+                  $edit_name = mysqli_fetch_assoc($editedby);
+                  
+                ?>
                 <tr id="delete<?=$tble_data['id'];?>" >
                     <td><?=$tble_data['id']?></td>
                     <td><?=$tble_data['name']?></td>
                     <td><?=$tble_data['position']?></td>
                     <td><?=$tble_data['date_edited']?></td>
-                    <td><?=$tble_data['date_edited']?></td>
-                    <td><a class="edit-data" href="../index.php?id=<?=$tble_data['id'];?>">Edit</a></td>
-                    <td><a class="delete-data text-white" href="#" onclick="delete_data(<?=$tble_data['id'];?>)" >Delete</a></td>
+                    <td><?=isset($edit_name['name']) ? $edit_name['name']: '';?></td>
+                    <td><a class="edit-data" href="../index.php?id=<?=$tble_data['id'];?>&editby=<?=$editby;?>" target="_blank">Edit</a></td>
+                    <td><a class="delete-data text-white" href="#" onclick="delete_data(<?=$tble_data['id'];?>)" target="_blank">Delete</a></td>
                 </tr>
               <?php endforeach;?>
             </tbody>
@@ -182,3 +191,11 @@ if(mysqli_num_rows($res_data) > 0 ){
     }
 </script>
 </html>
+
+<?php 
+mysqli_close($conn);
+}else{
+     header("Location: ../login/index.php");
+     exit();
+}
+ ?>

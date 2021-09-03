@@ -22,6 +22,8 @@
 <?php if(isset($_POST['submit'])  ) :
         
         $id = ($_POST['id'] ) ? $_POST['id'] : 0 ;
+        $editedby = ($_POST['editedby']) ? $_POST['editedby'] : 0; 
+        
         $name = $_POST['name'];  
         $position =  $_POST['position'] ;
         $applicant_info = $_POST['applicant_info'];
@@ -163,7 +165,8 @@
                 `seminar_name`='".$json_seminar_name."',
                 `seminar_year`='".$json_seminar_yr."',
                 `certification_name`='".$json_cert_name."',
-                `certification_year`='".$json_cert_yr."'
+                `certification_year`='".$json_cert_yr."', 
+                `edited_by` = '".$editedby."'
              WHERE 
                 id='".$id."'
             ";
@@ -171,7 +174,7 @@
                 if ($conn->query($sql_update) === TRUE) {
                     echo "Record updated successfully";
                 } else {
-                    echo "Error updating record: " . $conn->error;
+                    echo "Error updating record:  " . $conn->error;
                 }
             }
             else{
@@ -208,11 +211,11 @@
                         <div class="sidebar-child">
                             <h3 class="s-title">Skills</h3>
                             <ul class="s-items">
-                            <?php 
-                            $field_skills = explode('|', $field_skills);
-                            foreach($field_skills as $skill):?>
-                                <li><?=$skill?></li>
-                            <?php endforeach;?>
+                                <?php 
+                                $field_skills = explode('|', $field_skills);
+                                foreach($field_skills as $skill):?>
+                                    <li><?=$skill?></li>
+                                <?php endforeach;?>
                             </ul>
                         </div>
                     <?php endif;?>
