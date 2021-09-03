@@ -22,6 +22,8 @@
 <?php if(isset($_POST['submit'])  ) :
         
         $id = ($_POST['id'] ) ? $_POST['id'] : 0 ;
+        $editedby = ($_POST['editedby']) ? $_POST['editedby'] : 0; 
+        
         $name = $_POST['name'];  
         $position =  $_POST['position'] ;
         $applicant_info = $_POST['applicant_info'];
@@ -53,13 +55,16 @@
         $work_exp_comp_name = $_POST['work_experience']['company_name'];
         $work_exp_comp_position = $_POST['work_experience']['company_position'];
         $work_exp_duties_res = $_POST['work_experience']['duties_res'];
+        $work_exp_duties_res_str_rplce = str_replace('&quot;', '"', $work_exp_duties_res);
         $work_exp_projects = $_POST['work_experience']['projects'];
-        
+        $work_exp_project_str_rplce = str_replace('&quot;', '"', $work_exp_projects);
+
+
         $json_work_exp_start_date = json_encode($work_exp_start_date);
         $json_work_exp_comp_name = json_encode($work_exp_comp_name);
         $json_work_exp_comp_position = json_encode($work_exp_comp_position);
-        $json_work_exp_duties_res = json_encode($work_exp_duties_res);
-        $json_work_exp_projects = json_encode($work_exp_projects);
+        $json_work_exp_duties_res = json_encode($work_exp_duties_res_str_rplce);
+        $json_work_exp_projects = json_encode($work_exp_project_str_rplce);
         /*end of json encode work experience attainment*/
         
         /*return to json encode personal project array*/
@@ -133,22 +138,53 @@
                 '".$json_cert_yr."'
             )";
 
-            $sql_update = "";
-
+            
 
             if($id){
-                echo 'Update';
+                $sql_update = "
+            UPDATE
+                 `cvautomation`
+            SET 
+                `name`='".$name."',
+                `position`='".$position."',
+                `applicant-information`='".$applicant_info."',
+                `skills`='".$field_skills."',
+                `achievements`='".$achievements."',
+                `awards`='".$awards."',
+                `portfolio`='".$portfolio."',
+                `education`='".$json_edu_course."',
+                `name_of_school`='".$json_edu_sch_name."',
+                `year_gradute`='".$json_edu_yr_grad."',
+                `duration_of_work`='".$json_work_exp_start_date."',
+                `company_name`='".$json_work_exp_comp_name."',
+                `company_position`='".$json_work_exp_comp_position."',
+                `duties_responsibilites`='".$json_work_exp_duties_res."',
+                `projects`='".$json_work_exp_projects."',
+                `personpan_project_name`='".$json_per_proj_name."',
+                `personal_project_year`='".$json_per_proj_year."',
+                `seminar_name`='".$json_seminar_name."',
+                `seminar_year`='".$json_seminar_yr."',
+                `certification_name`='".$json_cert_name."',
+                `certification_year`='".$json_cert_yr."', 
+                `edited_by` = '".$editedby."'
+             WHERE 
+                id='".$id."'
+            ";
+
+                if ($conn->query($sql_update) === TRUE) {
+                    echo "Record updated successfully";
+                } else {
+                    echo "Error updating record:  " . $conn->error;
+                }
             }
             else{
-                echo 'New record ';
-                // if ($conn->query($sql_insert) === TRUE) {
-                //     echo "New record created successfully";
-                //   } else {
-                //     echo "Error: " . $sql_insert . "<br>" . $conn->error;
-                //   }
+                if ($conn->query($sql_insert) === TRUE) {
+                    echo "New record created successfully";
+                  } else {
+                    echo "Error: " . $sql_insert . "<br>" . $conn->error;
+                  }
             }
-            
-              
+  
             $conn->close();
       ?>
         
@@ -175,11 +211,11 @@
                         <div class="sidebar-child">
                             <h3 class="s-title">Skills</h3>
                             <ul class="s-items">
-                            <?php 
-                            $field_skills = explode('|', $field_skills);
-                            foreach($field_skills as $skill):?>
-                                <li><?=$skill?></li>
-                            <?php endforeach;?>
+                                <?php 
+                                $field_skills = explode('|', $field_skills);
+                                foreach($field_skills as $skill):?>
+                                    <li><?=$skill?></li>
+                                <?php endforeach;?>
                             </ul>
                         </div>
                     <?php endif;?>
