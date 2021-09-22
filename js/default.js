@@ -68,11 +68,14 @@ $(document).ready(function(){
 
     let personal_pro = '';
     personal_pro += '<div class="row">';
-    personal_pro += '<div class="col-sm">';
+    personal_pro += '<div class="col-sm col-lg-6 mt-4">';
     personal_pro += '<input type="text" name="personal[project_name][]" class="form-input form-control" value="" placeholder="Project Name" />'; //New input field html 
     personal_pro += '</div>';
-    personal_pro += '<div class="col-sm">'; 
+    personal_pro += '<div class="col-sm col-lg-6 mt-4">'; 
     personal_pro += '<input type="text" name="personal[project_year][]" class="form-input form-control" value="" placeholder="Project Year" />'; //New input field html 
+    personal_pro += '</div>';
+    personal_pro += '<div class="col-sm col-lg-8 mt-4">'; 
+    personal_pro += '<textarea name="personal[description][]" id="proj-dec" class="form-control work-exp" cols="3" rows="1" placeholder="Project Description"></textarea>'; //New input field html 
     personal_pro += '</div>';
     personal_pro += ' <a href="javascript:;" class="remove_button_per_proj"> <i class="fas fa-minus-circle text-danger"></i> </a>';
     personal_pro += '</div>';
@@ -81,12 +84,10 @@ $(document).ready(function(){
 
     let seminars = '';
     seminars += '<div class="row">';
-    seminars += '<div class="col-sm">';
+    seminars += '<div class="col-sm col-lg-8">';
     seminars += '<input type="text" name="seminars[seminar_name][]" class="form-input form-control" value="" placeholder="Seminar Name" />'; //New input field html 
     seminars += '</div>';
-    seminars += '<div class="col-sm">'; 
-    seminars += '<input type="text" name="seminars[seminar_year][]" class="form-input form-control" value="" placeholder="Seminar Year" />'; //New input field html 
-    seminars += '</div>';
+    
     seminars += ' <a href="javascript:;" class="remove_btn_seminar"> <i class="fas fa-minus-circle text-danger"></i> </a>';
     seminars += '</div>';
 
@@ -94,11 +95,8 @@ $(document).ready(function(){
 
     let certification = '';
     certification += '<div class="row">';
-    certification += '<div class="col-sm">';
+    certification += '<div class="col-sm col-lg-8">';
     certification += '<input type="text" name="certification[cert_name][]" class="form-input form-control" value="" placeholder="Certifications Name" />'; //New input field html 
-    certification += '</div>';
-    certification += '<div class="col-sm">'; 
-    certification += '<input type="text" name="certification[cert_year][]" class="form-input form-control" value="" placeholder="Certifications Year" />'; //New input field html 
     certification += '</div>';
     certification += ' <a href="javascript:;" class="remove_btn_seminar"> <i class="fas fa-minus-circle text-danger"></i> </a>';
     certification += '</div>';

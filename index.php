@@ -42,8 +42,6 @@
   </title>
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/bootstrap.css">
   <script src="js/jquery-3.6.0.min.js"></script>
@@ -237,9 +235,11 @@
                             <h1>Personal Project / Freelance Projects</h1>
                           </div>
                           <div class="row">
-                            <?php if(isset($row['personpan_project_name']) && isset($row['personal_project_year'])):
+                            <?php if(isset($row['personpan_project_name']) && isset($row['personal_project_year'])  && isset($row['personal_project_description']) ):
                                $json_per_name = json_decode($row['personpan_project_name']); 
                                $json_proj_yr = json_decode($row['personal_project_year']);
+                               $json_proj_desc = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '',  $row['personal_project_description']), true);
+                               
                             ?>
                               <?php foreach($json_per_name as $per_name):?>
                                 <div class="col-lg-6 col-sm">
@@ -248,9 +248,14 @@
                               <?php endforeach;?>
                               <?php foreach($json_proj_yr as $proj_yr):?>
                                     <div class="col-lg-6 col-sm">
-                                    <input type="text" name="personal[project_year][]" class="form-input form-control" value="<?=$proj_yr?>" placeholder="Project Year"/>
+                                      <input type="text" name="personal[project_year][]" class="form-input form-control" value="<?=$proj_yr?>" placeholder="Project Year"/>
                                     </div>          
                                   <?php endforeach;?>
+                              <?php foreach($json_proj_desc as $proj_desc):?>
+                                <div class="col-lg-6 col-sm">
+                                  <textarea name="personal[description][]" id="proj-dec" class="form-control work-exp" cols="3" rows="1" placeholder="Project Description"><?=$proj_desc;?></textarea>
+                                </div>          
+                              <?php endforeach;?>
                               <?php else:?>
                                 <div class="col-lg-6 col-sm">
                                     <input type="text" name="personal[project_name][]" class="form-input form-control" value="" placeholder="Project Name"/>
@@ -258,6 +263,9 @@
                                 <div class="col-lg-6 col-sm">
                                     <input type="text" name="personal[project_year][]" class="form-input form-control" value="" placeholder="Project Year"/>
                                   </div>
+                                <div class="col-sm col-lg-8 text-center">
+                                  <textarea name="personal[description][]" id="proj-dec" class="form-control work-exp" cols="3" rows="1" placeholder="Project Description"></textarea>
+                                </div>
                             <?php endif;?>
                             <a href="javascript:;" class="add_person_prj_btn" title="Add Personal Projects"><i class="fas fa-plus"></i></a>
                           </div>
@@ -270,7 +278,6 @@
                           <div class="row">
                             <?php if(!empty($row['seminar_name']) && !empty($row['seminar_year'])):
                                 $json_seminar_name = json_decode($row['seminar_name']);
-                                $json_seminar_year = json_decode($row['seminar_year']);
                             ?>
                             <?php foreach($json_seminar_name as $seminar_name):?>
                               <div class="col-lg-6 col-sm">
@@ -278,18 +285,11 @@
                               </div>  
                             <?php endforeach;?>
 
-                            <?php foreach($json_seminar_year as $seminar_yr):?>
-                              <div class="col-lg-6 col-sm">
-                                <input type="text" name="seminars[seminar_year][]" class="form-input form-control" value="<?=$seminar_yr?>" placeholder="Seminar Year"/>
-                              </div>
-                            <?php endforeach;?>
                             <?php else:?>
-                              <div class="col-lg-6 col-sm">
+                              <div class="col-lg-8 col-sm">
                                 <input type="text" name="seminars[seminar_name][]" class="form-input form-control" value="" placeholder="Seminar Name"/>
                               </div>
-                              <div class="col-lg-6 col-sm">
-                                <input type="text" name="seminars[seminar_year][]" class="form-input form-control" value="" placeholder="Seminar Year"/>
-                              </div>
+                            
                             <?php endif;?>
                             
                             <a href="javascript:;" class="add_seminar_btn" title="Add Seminars"><i class="fas fa-plus"></i></a>
@@ -304,26 +304,17 @@
                           <div class="row">
                               <?php if(isset($row['certification_name']) && isset($row['certification_year'])): 
                                     $json_cert_name = json_decode($row['certification_name']);
-                                    $json_cert_yr   = json_decode($row['certification_year']);
                                 ?>
                                   <?php foreach($json_cert_name as $cert_name):?>
                                     <div class="col-lg-6 col-sm">
                                       <input type="text" name="certification[cert_name][]" class="form-input form-control" value="<?=$cert_name ?>" placeholder="Certifications Name"/>
                                     </div>  
                                   <?php endforeach;?>
-                                    
-                                  <?php foreach($json_cert_yr as $cert_yr):?>
-                                    <div class="col-lg-6 col-sm">
-                                      <input type="text" name="certification[cert_year][]" class="form-input form-control" value="<?=$cert_yr;?>" placeholder="Certifications Year"/>
-                                    </div>
-                                  <?php endforeach;?>
                               <?php else:?>
-                                <div class="col-lg-6 col-sm">
+                                <div class="col-lg-8 col-sm">
                                       <input type="text" name="certification[cert_name][]" class="form-input form-control" value="" placeholder="Certifications Name"/>
                                 </div>  
-                                <div class="col-lg-6 col-sm">
-                                  <input type="text" name="certification[cert_year][]" class="form-input form-control" value="" placeholder="Certifications Year"/>
-                                </div>
+                                <a href="javascript:;" class="add_cert_btn" title="Add Certifications Name"><i class="fas fa-plus"></i></a>
                               <?php endif;?>
                           </div>
                       </div>

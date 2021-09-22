@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <?php 
     /*
@@ -10,13 +10,14 @@
   ?>
   <meta name="viewport"
     content="user-scalable=no, width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
-  <script src="js/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="js/html2pdf.bundle.min.js"></script>
+    <script src="js/html2pdf.bundle.min.js.map"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">  
 </head>
 <body>
 <?php if(isset($_POST['submit'])  ) :
@@ -70,25 +71,25 @@
         /*return to json encode personal project array*/
         $personal_proj_name = $_POST['personal']['project_name'];
         $personal_proj_year = $_POST['personal']['project_year'];
+        $personal_proj_desc = $_POST['personal']['description'];
 
         $json_per_proj_name = json_encode($personal_proj_name);
         $json_per_proj_year = json_encode($personal_proj_year);
+        $json_per_proj_desc = json_encode($personal_proj_desc);
         /* end of json personal project array*/
 
         /*return to json encode seminar & training array*/
         $seminar_name = $_POST['seminars']['seminar_name'];
-        $seminar_yr = $_POST['seminars']['seminar_year'];
-
+        
         $json_seminar_name  = json_encode($seminar_name);
-        $json_seminar_yr    = json_encode($seminar_yr);
+        
         /* end of json seminar & training to array*/
 
         /*return to json encode certification to array*/
         $certi_cert_name = $_POST['certification']['cert_name'];
-        $certi_cert_yr = $_POST['certification']['cert_year'];
 
         $json_cert_name = json_encode($certi_cert_name);
-        $json_cert_yr  = json_encode($certi_cert_yr);
+        
         /*end of json encode certification to array*/
 
         if(empty($name) || empty($position)  ){
@@ -112,7 +113,7 @@
             $sql_insert = "INSERT INTO cvautomation (`id`,
             `name`,`position`,`applicant-information`, `skills`,`achievements`, `awards`, `portfolio`, `education`,
             `name_of_school`, `year_gradute`, `duration_of_work`, `company_name`, `company_position`, `duties_responsibilites`,
-            `projects`, `personpan_project_name`, `personal_project_year`, `seminar_name`, `seminar_year`, `certification_name`,`certification_year`
+            `projects`, `personpan_project_name`, `personal_project_year`, `personal_project_description`, `seminar_name`,  `certification_name`
             ) VALUES (
                 '', 
                 '".$name."',
@@ -132,10 +133,10 @@
                 '".$json_work_exp_projects."',
                 '".$json_per_proj_name."',
                 '".$json_per_proj_year."',
+                '".$json_per_proj_desc."',
                 '".$json_seminar_name."',
-                '".$json_seminar_yr."',
-                '".$json_cert_name."',
-                '".$json_cert_yr."'
+                '".$json_cert_name."'
+                
             )";
 
             
@@ -162,10 +163,9 @@
                 `projects`='".$json_work_exp_projects."',
                 `personpan_project_name`='".$json_per_proj_name."',
                 `personal_project_year`='".$json_per_proj_year."',
+                `personal_project_description`='".$json_per_proj_desc."',
                 `seminar_name`='".$json_seminar_name."',
-                `seminar_year`='".$json_seminar_yr."',
                 `certification_name`='".$json_cert_name."',
-                `certification_year`='".$json_cert_yr."', 
                 `edited_by` = '".$editedby."'
              WHERE 
                 id='".$id."'
@@ -265,7 +265,7 @@
                 <div class="experiences-container">
                     <div class="exp-child educational_att">
                         <h3 class="exp-title">Educational Attainment</h3>
-                        <article>
+                        
                             <?php
                             $count_sch_name = count($educArray['school_name']);
                             $letEduData = []; 
@@ -284,7 +284,7 @@
                                     echo '</div>';
                                 }
                             ?>
-                        </article>
+                        
                     </div>
                    <?php if(!empty($work_experience['company_name'][0]) || 
                             !empty($work_experience['start_date'][0]) || 
@@ -294,7 +294,7 @@
                     ): ?>
                     <div class="exp-child work_experience">
                         <h3 class="exp-title">Work Experiences</h3>
-                        <article>
+                        
                             <!--LOOPED if dghan ang gi input-->
                             <?php 
                             $count = count($work_experience['company_name']);
@@ -327,14 +327,14 @@
                                     echo '</div>';
                                 }
                             ?>
-                        </article>
+                        
                     </div>
                     <?php endif;?>
                     <!--  projects-->
-                    <?php if(!empty($_POST['personal']['project_name'][0]) || !empty($_POST['personal']['project_year'][0]) ):?>
+                    <?php if(!empty($_POST['personal']['project_name'][0]) || !empty($_POST['personal']['project_year'][0]) || !empty($_POST['personal']['project_year'][0]) ):?>
                         <div class="exp-child educational_att">
                             <h3 class="exp-title">Personal Project</h3>
-                            <article>
+                            
                             <?php 
                                $count_personal = count($_POST['personal']['project_name']);
                                $personalData = [];
@@ -355,16 +355,14 @@
                                     }
                                    
                             ?>
-                            </article>
+                            
                         </div>
                     <?php endif;?>
                     <!--end per project -->
-
                        <!-- Seminars-->
                     <?php if(!empty($_POST['seminars']['seminar_name'][0]) || !empty($_POST['seminars']['seminar_year'][0]) ):?>
                         <div class="exp-child educational_att">
-                            <h3 class="exp-title">Seminars & Training</h3>
-                            <article>
+                            <h3 class="exp-title">Seminars & Training</h3> 
                             <?php 
                                 $count_seminar = count($_POST['seminars']['seminar_name']);
                                 $seminarData = [];
@@ -384,15 +382,13 @@
                                     echo '</div>';
                                 }
                             ?>
-                            
-                            </article>
                         </div>
                     <?php endif;?>
                     <!--end end seminars & training -->
-                    <?php if(!empty($_POST['certification']['cert_name'][0]) || !empty($_POST['certification']['cert_year'][0]) ):?>
+                    <?php if(!empty($_POST['certification']['cert_name'][0]) || !empty($_POST['certification']['cert_year'][0])  ):?>
                         <div class="exp-child educational_att">
                             <h3 class="exp-title">Certifications</h3>
-                            <article>    
+                            
                                 <?php 
                                     $count_certi = count($_POST['certification']['cert_name']);
                                     $certi_data = [];
@@ -411,7 +407,7 @@
                                         echo '</div>';
                                     }
                                 ?>
-                            </article>
+                            
                         </div>
                     <?php endif;?>
                 </div>
@@ -437,10 +433,10 @@
             >Back </button>
         </div>
 </body>
+    
     <script>
-      function generatePDF() {
-        
-        
+
+      function generatePDF() {        
         const element = document.getElementById('wrapper');
         let width = element.offsetWidth;
         let height = element.offsetHeight;
@@ -456,6 +452,8 @@
             
         }); 
       }
+
+      
     </script>   
 </html>
 
