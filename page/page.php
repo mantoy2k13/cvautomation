@@ -44,8 +44,18 @@ if(mysqli_num_rows($res_data) > 0 ){
 
 
 
-    // echo $row['name'];
-    
+function getEdit($edit_id){
+    global $conn;
+    if($conn->connect_errno){
+        echo 'Failed connect to Mysql' .$conn->connect_errno;
+        exit();
+    }
+    $sql_editedby = "SELECT u.id as u_id, u.name FROM `users` u WHERE u.id = '".$edit_id."' ";
+    $editedby = mysqli_query($conn,$sql_editedby);
+    $edit_name = mysqli_fetch_assoc($editedby);
+
+    return $edit_name;
+}    
 
 ?>
 <!DOCTYPE html>
@@ -125,13 +135,12 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
                 </tr>
             </thead>
             <tbody>
+                
               <?php foreach($data as $tble_data):?>
                 <?php 
                   $edit_id = $tble_data['edited_by'];
-                  $sql_editedby = "SELECT u.id as u_id, u.name FROM `users` u WHERE u.id = '".$edit_id."' ";
-                  $editedby = mysqli_query($conn,$sql_editedby);
-                  $edit_name = mysqli_fetch_assoc($editedby);
-                  
+                  $edit_name = getEdit($edit_id);
+
                 ?>
                 <tr id="delete<?=$tble_data['id'];?>" >
                     <td><?=$tble_data['id']?></td>
@@ -140,7 +149,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
                     <td><?=$tble_data['date_edited']?></td>
                     <td><?=isset($edit_name['name']) ? $edit_name['name']: '';?></td>
                     <td><a class="edit-data" href="../index.php?id=<?=$tble_data['id'];?>&editby=<?=$editby;?>" target="_blank">Edit</a></td>
-                    <td><a class="delete-data text-white" href="#" onclick="delete_data(<?=$tble_data['id'];?>)" target="_blank">Delete</a></td>
+                    <td><a class="delete-data text-white" href="#" onclick="delete_data(<?=$tble_data['id'];?>)" >Delete</a></td>
                 </tr>
               <?php endforeach;?>
             </tbody>
